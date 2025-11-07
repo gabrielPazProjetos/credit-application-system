@@ -51,6 +51,9 @@ class CustomerResourceTest {
     val customerDto: CustomerDto = builderCustomerDto()
     val valueAsString: String = objectMapper.writeValueAsString(customerDto)
     //when
+    val request = MockMvcRequestBuilders.post(URL)
+    .contentType(MediaType.APPLICATION_JSON)
+    .content(valueAsString)
     //then
     mockMvc.perform(
       MockMvcRequestBuilders.post(URL)
@@ -76,6 +79,9 @@ class CustomerResourceTest {
     val customerDto: CustomerDto = builderCustomerDto()
     val valueAsString: String = objectMapper.writeValueAsString(customerDto)
     //when
+    val request = MockMvcRequestBuilders.post(URL)
+    .contentType(MediaType.APPLICATION_JSON)
+    .content(valueAsString)
     //then
     mockMvc.perform(
       MockMvcRequestBuilders.post(URL)
@@ -100,6 +106,9 @@ class CustomerResourceTest {
     val customerDto: CustomerDto = builderCustomerDto(firstName = "")
     val valueAsString: String = objectMapper.writeValueAsString(customerDto)
     //when
+    val request = MockMvcRequestBuilders.post(URL)
+    .contentType(MediaType.APPLICATION_JSON)
+    .content(valueAsString)
     //then
     mockMvc.perform(
       MockMvcRequestBuilders.post(URL)
@@ -123,6 +132,8 @@ class CustomerResourceTest {
     //given
     val customer: Customer = customerRepository.save(builderCustomerDto().toEntity())
     //when
+    val request = MockMvcRequestBuilders.get("$URL/${customer.id}")
+    .accept(MediaType.APPLICATION_JSON)
     //then
     mockMvc.perform(
       MockMvcRequestBuilders.get("$URL/${customer.id}")
@@ -145,6 +156,8 @@ class CustomerResourceTest {
     //given
     val invalidId: Long = 2L
     //when
+    val request = MockMvcRequestBuilders.get("$URL/$invalidId")
+    .accept(MediaType.APPLICATION_JSON)
     //then
     mockMvc.perform(
       MockMvcRequestBuilders.get("$URL/$invalidId")
@@ -167,6 +180,8 @@ class CustomerResourceTest {
     //given
     val customer: Customer = customerRepository.save(builderCustomerDto().toEntity())
     //when
+    val request = MockMvcRequestBuilders.delete("$URL/${customer.id}")
+    .accept(MediaType.APPLICATION_JSON)
     //then
     mockMvc.perform(
       MockMvcRequestBuilders.delete("$URL/${customer.id}")
@@ -181,6 +196,8 @@ class CustomerResourceTest {
     //given
     val invalidId: Long = Random().nextLong()
     //when
+    val request = MockMvcRequestBuilders.delete("$URL/$invalidId")
+    .accept(MediaType.APPLICATION_JSON)
     //then
     mockMvc.perform(
       MockMvcRequestBuilders.delete("$URL/${invalidId}")
@@ -205,6 +222,9 @@ class CustomerResourceTest {
     val customerUpdateDto: CustomerUpdateDto = builderCustomerUpdateDto()
     val valueAsString: String = objectMapper.writeValueAsString(customerUpdateDto)
     //when
+    val request = MockMvcRequestBuilders.patch("$URL?customerId=${customer.id}")
+    .contentType(MediaType.APPLICATION_JSON)
+    .content(valueAsString)
     //then
     mockMvc.perform(
       MockMvcRequestBuilders.patch("$URL?customerId=${customer.id}")
@@ -230,6 +250,9 @@ class CustomerResourceTest {
     val customerUpdateDto: CustomerUpdateDto = builderCustomerUpdateDto()
     val valueAsString: String = objectMapper.writeValueAsString(customerUpdateDto)
     //when
+    val request = MockMvcRequestBuilders.patch("$URL?customerId=$invalidId")
+    .contentType(MediaType.APPLICATION_JSON)
+    .content(valueAsString)
     //then
     mockMvc.perform(
       MockMvcRequestBuilders.patch("$URL?customerId=$invalidId")
